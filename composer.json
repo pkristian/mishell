@@ -1,0 +1,19 @@
+{
+	"name": "pkristian/mishell",
+	"license": [
+		"MIT"
+	],
+	"config": {
+		"vendor-dir": "src/vendor"
+	},
+	"require": {
+		"php": ">=5.6",
+		"nette/utils": "^2.4"
+	},
+	"authors": [
+		{
+			"name": "Patrik Kristian",
+			"email": "patrik@pkristian.cz"
+		}
+	]
+}

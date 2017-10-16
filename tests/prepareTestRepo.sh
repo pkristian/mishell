@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
+rm -rf testRepo
 mkdir testRepo
 cd testRepo
-rm -rf ./*
 
 git init
 

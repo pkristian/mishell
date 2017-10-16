@@ -66,19 +66,23 @@ class Main
 
 		/* on right commit? */
 		$commitCurrent = $this->executor->execute('git rev-parse HEAD');
-		if (!$commitCurrent)
+		if ($commitCurrent->code)
 		{
 			throw new Exception('Cannot get hash of current commit: ' . $this->executor->getLastError());
 		}
+		$commitCurrentHash = $commitCurrent->out;
+
 		$commitTarget = $this->executor->execute("git show-ref {$profile->getFullBranch()} | awk '{print $1}'");
-		if (!$commitTarget)
+		if ($commitTarget->code)
 		{
 			throw new Exception('Cannot get hash of target commit: ' . $this->executor->getLastError());
 		}
+		$commitTargetHash = $commitTarget->out;
+
 
 
 		/* ?? deploy */
-		$commitsSame = $commitTarget === $commitCurrent;
+		$commitsSame = $commitTargetHash === $commitCurrentHash;
 		if (!$commitsSame)
 		{
 			if ($profile->commandBefore)
@@ -95,7 +99,5 @@ class Main
 
 
 		}
-
-		$this->executor->execute('echo "k"');
 	}
 }

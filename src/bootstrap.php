@@ -18,4 +18,5 @@ function __autoload($class_name)
 
 spl_autoload_register("__autoload");
 
-new \App\Main($argv);
+$app = new \App\Main($argv);
+$app->run();

@@ -7,6 +7,8 @@ namespace App;
 class Profile
 {
 
+	public $name;
+
 	public $requiredUser;
 
 	public $repositoryDirectory;

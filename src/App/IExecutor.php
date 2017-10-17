@@ -10,7 +10,7 @@ interface IExecutor
 	/**
 	 * @param string $command
 	 *
-	 * @return string|false
+	 * @return \App\ExecutorOutput
 	 */
 	public function execute($command);
 

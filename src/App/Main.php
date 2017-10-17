@@ -4,7 +4,6 @@
 namespace App;
 
 
-use App\Log\StreamHandler;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Logger;
 
@@ -31,7 +30,7 @@ class Main
 	{
 		/* log */
 		$this->log = new Logger('main');
-		$streamHandler = new StreamHandler('php://output');
+		$streamHandler = new Log\StreamHandler('php://output');
 		$formatter = new LineFormatter(
 			"[%datetime%] %channel%-%level_name%: %message% %context% %extra%\n",
 			"Y-m-d H:i:s.v",
@@ -72,10 +71,10 @@ class Main
 
 	private function innerFunctionality()
 	{
-		$runner = new ProfileRunner(
+		$runner = new Profile\ProfileRunner(
 			$this->log->withName('profile'),
 			$this->runtime,
-			new Executor()
+			new Exec\Executor()
 		);
 		$runner->runProfile();
 	}

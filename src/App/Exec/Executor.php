@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App;
+namespace App\Exec;
 
 
 class Executor implements IExecutor
@@ -13,7 +13,7 @@ class Executor implements IExecutor
 	/**
 	 * @param string $command
 	 *
-	 * @return \App\ExecutorOutput
+	 * @return \App\Exec\ExecutorOutput
 	 */
 	public function execute($command)
 	{

@@ -18,7 +18,7 @@ class Runtime
 	public $workingDirectory;
 
 	/**
-	 * @var \App\Profile
+	 * @var Profile\Profile
 	 */
 	public $profile;
 
@@ -59,7 +59,7 @@ class Runtime
 
 		$ini = parse_ini_file($profileFilePath);
 
-		$this->profile = new Profile();
+		$this->profile = new Profile\Profile();
 
 		foreach ($this->profile as $key => $item)
 		{

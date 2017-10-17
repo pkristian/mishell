@@ -1,9 +1,12 @@
 <?php
 
 
-namespace App;
+namespace App\Profile;
 
 
+use App\Exec\IExecutor;
+use App\Runtime;
+use App\Exception;
 use Monolog\Logger;
 
 class ProfileRunner
@@ -21,13 +24,13 @@ class ProfileRunner
 
 
 	/**
-	 * @var \App\IExecutor
+	 * @var \App\Exec\IExecutor
 	 */
 	public $executor;
 
 
 	/**
-	 * @var \App\Profile
+	 * @var \App\Profile\Profile
 	 */
 	public $profile;
 
@@ -37,7 +40,7 @@ class ProfileRunner
 	 *
 	 * @param \Monolog\Logger $log
 	 * @param \App\Runtime $runtime
-	 * @param \App\IExecutor $executor
+	 * @param \App\Exec\IExecutor $executor
 	 */
 	public function __construct(Logger $log, Runtime $runtime, IExecutor $executor)
 	{

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App;
+namespace App\Exec;
 
 
 interface IExecutor
@@ -10,7 +10,7 @@ interface IExecutor
 	/**
 	 * @param string $command
 	 *
-	 * @return \App\ExecutorOutput
+	 * @return \App\Exec\ExecutorOutput
 	 */
 	public function execute($command);
 

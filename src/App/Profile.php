@@ -17,6 +17,8 @@ class Profile
 
 	public $logFile;
 
+	public $logLevel = 100;
+
 	public $commandBefore;
 
 	public $commandAfter;

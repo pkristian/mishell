@@ -6,6 +6,28 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit6493a0d135cfee5d2378be6d63df8fd0
 {
+    public static $prefixLengthsPsr4 = array (
+        'P' => 
+        array (
+            'Psr\\Log\\' => 8,
+        ),
+        'M' => 
+        array (
+            'Monolog\\' => 8,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'Psr\\Log\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+        ),
+        'Monolog\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
+        ),
+    );
+
     public static $classMap = array (
         'Nette\\ArgumentOutOfRangeException' => __DIR__ . '/..' . '/nette/utils/src/Utils/exceptions.php',
         'Nette\\DeprecatedException' => __DIR__ . '/..' . '/nette/utils/src/Utils/exceptions.php',
@@ -54,6 +76,8 @@ class ComposerStaticInit6493a0d135cfee5d2378be6d63df8fd0
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->prefixLengthsPsr4 = ComposerStaticInit6493a0d135cfee5d2378be6d63df8fd0::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit6493a0d135cfee5d2378be6d63df8fd0::$prefixDirsPsr4;
             $loader->classMap = ComposerStaticInit6493a0d135cfee5d2378be6d63df8fd0::$classMap;
 
         }, null, ClassLoader::class);

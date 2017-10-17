@@ -8,6 +8,11 @@ class Main
 {
 
 	/**
+	 * @var \Monolog\Logger
+	 */
+	public $log;
+
+	/**
 	 * @var \App\Runtime
 	 */
 	public $runtime;
@@ -24,7 +29,21 @@ class Main
 	 */
 	public function __construct($arguments)
 	{
+		$this->log = new \Monolog\Logger('log');
+		$this->log->pushHandler(new \Monolog\Handler\StreamHandler('php://output'));
+
 		$this->runtime = new Runtime($arguments);
+
+		if ($this->runtime->profile->logFile)
+		{
+			$this->log->pushHandler(
+				new \Monolog\Handler\StreamHandler(
+					$this->runtime->workingDirectory . DIRECTORY_SEPARATOR . $this->runtime->profile->logFile,
+					$this->runtime->profile->logLevel
+				)
+			);
+		}
+
 		$this->executor = new Executor();
 
 

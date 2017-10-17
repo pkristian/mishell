@@ -4,6 +4,10 @@
 namespace App;
 
 
+use App\Log\StreamHandler;
+use Monolog\Formatter\LineFormatter;
+use Monolog\Logger;
+
 class Main
 {
 
@@ -20,13 +24,15 @@ class Main
 
 	/**
 	 * Main constructor.
+	 *
+	 * @param $arguments
 	 */
 	public function __construct($arguments)
 	{
 		/* log */
-		$this->log = new \Monolog\Logger('main');
-		$streamHandler = new \App\Log\StreamHandler('php://output');
-		$formatter = new \Monolog\Formatter\LineFormatter(
+		$this->log = new Logger('main');
+		$streamHandler = new StreamHandler('php://output');
+		$formatter = new LineFormatter(
 			"[%datetime%] %channel%-%level_name%: %message% %context% %extra%\n",
 			"Y-m-d H:i:s.v",
 			true,

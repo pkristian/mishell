@@ -4,6 +4,8 @@
 namespace App;
 
 
+use Monolog\Logger;
+
 class ProfileRunner
 {
 
@@ -35,8 +37,9 @@ class ProfileRunner
 	 *
 	 * @param \Monolog\Logger $log
 	 * @param \App\Runtime $runtime
+	 * @param \App\IExecutor $executor
 	 */
-	public function __construct(\Monolog\Logger $log, \App\Runtime $runtime, IExecutor $executor)
+	public function __construct(Logger $log, Runtime $runtime, IExecutor $executor)
 	{
 		$this->log = $log;
 		$this->runtime = $runtime;

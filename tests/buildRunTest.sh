@@ -16,4 +16,4 @@ echo "Preparing repo..."
 
 echo 'Running...'
 cd $DIR
-php $DIR/../build/mishell.phar testProfile.ini
+php $DIR/../build/dev/mishell.phar testProfile.ini

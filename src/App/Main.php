@@ -31,9 +31,13 @@ class Main
 		/* log */
 		$this->log = new Logger('main');
 		$streamHandler = new Log\StreamHandler('php://output');
+
+		$datetimeFormat = "Y-m-d H:i:s"
+		. (version_compare(PHP_VERSION, '7.0.0') >= 0 ? '.v' : null);
+
 		$formatter = new LineFormatter(
 			"[%datetime%] %channel%-%level_name%: %message% %context% %extra%\n",
-			"Y-m-d H:i:s.v",
+			$datetimeFormat,
 			true,
 			true
 		);

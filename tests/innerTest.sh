@@ -5,5 +5,4 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd $DIR
 
-bash buildRunTest.sh \
-#	> runtime.log
+bash buildRunTest.sh # echo into console

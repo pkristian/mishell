@@ -11,7 +11,7 @@ php $DIR/../scripts/build.php
 
 #run
 echo "Preparing repo..."
-. prepareTestRepo.sh 1> /dev/null 2> /dev/null
+. prepareTestRepo.sh 2>&1 1> prepareTestRepo.log
 cd $DIR
 
 echo 'Running...'

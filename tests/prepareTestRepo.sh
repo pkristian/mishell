@@ -5,6 +5,8 @@ mkdir testRepo
 cd testRepo
 
 git init
+git config user.email "you@domain.com"
+git config user.name "github_username"
 
 echo "blah blah" > first
 git add .

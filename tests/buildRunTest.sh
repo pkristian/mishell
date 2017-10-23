@@ -14,6 +14,9 @@ echo "Preparing repo..."
 . prepareTestRepo.sh 2>&1 1> prepareTestRepo.log
 cd $DIR
 
-echo 'Running...'
-
+echo ' '
+echo 'Running with test profile...'
 php $DIR/../build/mishell.phar testProfile.ini
+
+echo 'Running w/o profile...'
+php $DIR/../build/mishell.phar

@@ -20,6 +20,13 @@ class Main
 	 */
 	public $runtime;
 
+	/**
+	 * @var \App\Exec\IExecutor
+	 */
+	public $executor;
+
+	private $arguments = [];
+
 
 	/**
 	 * Main constructor.
@@ -28,6 +35,10 @@ class Main
 	 */
 	public function __construct($arguments)
 	{
+		$this->arguments = $arguments;
+
+		$this->executor = new Exec\Executor();
+
 		/* log */
 		$this->log = new Logger('main');
 		$streamHandler = new Log\StreamHandler('php://output');
@@ -44,8 +55,7 @@ class Main
 		$streamHandler->setFormatter($formatter);
 		$this->log->pushHandler($streamHandler);
 
-		/* runtime */
-		$this->runtime = new Runtime($arguments);
+
 	}
 
 
@@ -53,17 +63,29 @@ class Main
 	{
 		$this->log->info('* * * Mishell is starting...');
 
+
 		try
 		{
+			$this->runtime = new Runtime($this->arguments);
+			$this->checkGit();
 			$this->innerFunctionality();
 		}
-		catch (\Exception $e)
+		catch (MiException $e)
 		{
-			$this->log->err(
+			$this->log->log(
+				$e->getCode()
+				,
 				$e->getMessage(),
 				[
 					$e->getFile() . ':' . $e->getLine(),
 				]
+			);
+		}
+		catch (\Exception $e)
+		{
+			$this->log->emergency(
+				'Uncaught exception: ' . $e->getMessage(),
+				(array) $e->getTraceAsString()
 			);
 		}
 		$this->log->info('* * * ...ending Mishell');
@@ -78,8 +100,19 @@ class Main
 		$runner = new Profile\ProfileRunner(
 			$this->log->withName('profile'),
 			$this->runtime,
-			new Exec\Executor()
+			$this->executor
 		);
 		$runner->runProfile();
+	}
+
+
+	private function checkGit()
+	{
+		$version = $this->executor->execute('git --version');
+
+		if ($version->code)
+		{
+			throw new MiException('git not available', Logger::ALERT);
+		}
 	}
 }

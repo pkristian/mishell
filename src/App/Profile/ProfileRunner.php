@@ -6,7 +6,7 @@ namespace App\Profile;
 
 use App\Exec\IExecutor;
 use App\Runtime;
-use App\Exception;
+use App\MiException;
 use Monolog\Logger;
 
 class ProfileRunner
@@ -91,10 +91,10 @@ class ProfileRunner
 		{
 			$currentUser = get_current_user();
 			$this->log->debug("current user: " . $currentUser);
-			if ($this->profile->requiredUser != $currentUser)
+			if ($requiredUser != $currentUser)
 			{
 				$this->log->error("user mismatch");
-				throw new Exception("wrong user: '$currentUser' should been '$requiredUser'");
+				throw new MiException("wrong user: '$currentUser' should been '$requiredUser'");
 			}
 		}
 	}
@@ -111,7 +111,7 @@ class ProfileRunner
 		{
 			$message = "Cannot cd to '$dir'";
 			$this->log->err($message);
-			throw new Exception($message);
+			throw new MiException($message);
 		}
 	}
 
@@ -136,7 +136,7 @@ class ProfileRunner
 		if (!$fetched)
 		{
 			$this->log->err("cannot fetch");
-			throw new Exception(
+			throw new MiException(
 				"Could not fetch from remote '$remote' branch '$branch':"
 				. $this->executor->getLastError()
 			);
@@ -147,7 +147,7 @@ class ProfileRunner
 
 	/**
 	 * @return string|null
-	 * @throws \App\Exception
+	 * @throws \App\MiException
 	 */
 	private function targetCommit()
 	{
@@ -162,10 +162,13 @@ class ProfileRunner
 		{
 			$message = 'Cannot get hash of current commit: ' . $this->executor->getLastError();
 			$this->log->error($message);
-			throw new Exception($message);
+			throw new MiException($message);
 		}
 		$commitCurrentHash = $commitCurrent->out;
-		$this->log->debug("current commit: $commitCurrentHash");
+		$this->log->debug(
+			"current commit: "
+			. substr($commitCurrentHash, 0, 7)
+		);
 
 
 		/* target */
@@ -176,10 +179,13 @@ class ProfileRunner
 		{
 			$message = 'Cannot get hash of target commit: ' . $this->executor->getLastError();
 			$this->log->error($message);
-			throw new Exception($message);
+			throw new MiException($message);
 		}
 		$commitTargetHash = $commitTarget->out;
-		$this->log->debug("target commit:  $commitTargetHash");
+		$this->log->debug(
+			"target commit:  "
+			. substr($commitTargetHash, 0, 7)
+		);
 
 
 		/* ?? deploy */

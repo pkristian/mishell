@@ -39,12 +39,12 @@ class Runtime
 		$workingDirectory = getcwd();
 
 		if (!$workingDirectory)
-			throw new \Exception('Working directory not available');
+			throw new MiException('Working directory not available');
 		$this->workingDirectory = $workingDirectory . DIRECTORY_SEPARATOR;
 
 		$profileFile = reset($this->arguments);
 		if (!$profileFile)
-			throw new \Exception('Profile file not specified');
+			throw new MiException('Profile file not specified');
 		$this->loadProfile($profileFile);
 	}
 
@@ -54,7 +54,7 @@ class Runtime
 		$profileFilePath = $this->workingDirectory . $profileFile;
 
 		if (!file_exists($profileFilePath))
-			throw new \Exception('Profile file does not exists: ' . $profileFilePath);
+			throw new MiException('Profile file does not exists: ' . $profileFilePath);
 
 
 		$ini = parse_ini_file($profileFilePath);

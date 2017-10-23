@@ -10,6 +10,8 @@ use Monolog\Logger;
 class Main
 {
 
+	const VERSION = "0.1.0";
+
 	/**
 	 * @var \Monolog\Logger
 	 */
@@ -61,7 +63,7 @@ class Main
 
 	public function run()
 	{
-		$this->log->info('* * * Mishell is starting...');
+		$this->log->info('* * * Mishell v ' . self::VERSION . ' is starting...');
 
 
 		try

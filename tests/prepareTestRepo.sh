@@ -8,13 +8,9 @@ git init
 git config user.email "you@domain.com"
 git config user.name "github_username"
 
-echo "blah blah" > first
-git add .
-git commit -m 'first'
-git checkout -B first
+git remote add origin git@github.com:pkristian/mishell.git
 
-git checkout -B second
-echo "blah" > second
-git add .
-git commit -m 'second'
 
+git fetch origin testDeploy-one
+
+git checkout -f origin/testDeploy-one

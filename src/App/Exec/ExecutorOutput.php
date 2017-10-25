@@ -10,7 +10,7 @@ class ExecutorOutput
 	/**
 	 * @var string
 	 */
-	public $command;
+	public $command = '';
 
 	/**
 	 * @var int

@@ -83,6 +83,8 @@ class ProfileRunner
 
 	private function checkUser()
 	{
+		if ($this->runtime->sudo) return;
+
 		$this->log->info("* Checking user...");
 
 		$requiredUser = $this->profile->requiredUser;
@@ -205,28 +207,31 @@ class ProfileRunner
 
 	private function deploy()
 	{
-		$this->log->info("* * Deploying...");
+		$this->log->notice("* * Deploying...");
 
-		$commandBefore = $this->profile->commandBefore;
-		$commandDeploy = "git checkout -f {$this->profile->getFullBranch()}";
-		$commandAfter = $this->profile->commandAfter;
+		$commands = [
+			$this->profile->commandBefore,
+			"git checkout -f {$this->profile->getFullBranch()}",
+			$this->profile->commandAfter,
+		];
+
+		$commands = array_filter($commands);
 
 
-		if ($commandBefore)
+		foreach ($commands as $command)
 		{
-			$this->log->debug(">>\$ $commandBefore");
-			$this->executor->execute($commandBefore);
+			$this->log->debug(">>\$ $command");
+			$output = $this->executor->execute($command);
+			if ($output->code)
+			{
+				$this->log->err(
+					"Command \"$output->command\" failed: "
+					. "$output->code : $output->err"
+				);
+			}
+			$this->log->debug($output->out);
 		}
 
-			$this->log->debug(">>\$ $commandDeploy");
-			$this->executor->execute($commandDeploy);
-;
-
-		if ($commandAfter)
-		{
-			$this->log->debug(">>\$ $commandAfter");
-			$this->executor->execute($commandAfter);
-		}
 	}
 
 	/* privates */

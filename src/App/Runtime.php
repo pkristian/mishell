@@ -23,6 +23,20 @@ class Runtime
 	public $profile;
 
 
+	/**
+	 * @inputParam
+	 * @var bool
+	 */
+	public $daemon = false;
+
+	/**
+	 * @inputParam
+	 * @var bool
+	 */
+	public $sudo = false;
+
+
+
 
 	/**
 	 * Runtime constructor.
@@ -46,6 +60,13 @@ class Runtime
 		if (!$profileFile)
 			throw new MiException('Profile file not specified');
 		$this->loadProfile($profileFile);
+
+		$params = $this->arguments;
+		array_shift($params);
+		if ($params)
+		{
+			$this->loadParams($params);
+		}
 	}
 
 
@@ -59,16 +80,38 @@ class Runtime
 
 		$ini = parse_ini_file($profileFilePath);
 
-		$this->profile = new Profile\Profile();
+		$this->profile = new Profile\Profile($ini);
 
-		foreach ($this->profile as $key => $item)
+	}
+
+
+	private function loadParams($params)
+	{
+		$cleanParams = [];
+		foreach ($params as $param)
 		{
-			if (isset($ini[$key]))
-			{
-				$this->profile->$key = (string) $ini[$key];
-			}
-
+			list($key, $value) = explode('=', $param, 2);
+			$cleanParams[$key] = !is_null($value) ? $value : true;
 		}
+
+		/* paste params in runtime */
+
+		foreach ($cleanParams as $param => $value)
+		{
+			switch ($param)
+			{
+				case 'daemon':
+					$this->daemon = (bool) $value;
+					break;
+				case 'sudo':
+					$this->sudo = (bool) $value;
+					break;
+				default:
+					throw new MiException("Unknown parameter \"$param\".");
+
+			}
+		}
+
 	}
 
 

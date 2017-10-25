@@ -63,7 +63,7 @@ class Main
 
 	public function run()
 	{
-		$this->log->info('* * * Mishell v ' . self::VERSION . ' is starting...');
+		$this->log->info('* * * Mishell v' . self::VERSION . ' is starting...');
 
 
 		try
@@ -77,10 +77,8 @@ class Main
 			$this->log->log(
 				$e->getCode()
 				,
-				$e->getMessage(),
-				[
-					$e->getFile() . ':' . $e->getLine(),
-				]
+				$e->getMessage()
+
 			);
 		}
 		catch (\Exception $e)
@@ -99,12 +97,23 @@ class Main
 
 	private function innerFunctionality()
 	{
-		$runner = new Profile\ProfileRunner(
-			$this->log->withName('profile'),
-			$this->runtime,
-			$this->executor
-		);
-		$runner->runProfile();
+		while (true)
+		{
+			$runner = new Profile\ProfileRunner(
+				$this->log->withName('profile'),
+				$this->runtime,
+				$this->executor
+			);
+			$runner->runProfile();
+
+			chdir($this->runtime->workingDirectory);
+
+			if (!$this->runtime->daemon) return;
+
+			$this->log->debug("...waiting...");
+			sleep(60);
+		}
+
 	}
 
 

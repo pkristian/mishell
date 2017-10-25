@@ -15,8 +15,5 @@ echo "Preparing repo..."
 cd $DIR
 
 echo ' '
-echo 'Running with test profile...'
-php $DIR/../build/mishell.phar testProfile.ini
-
-echo 'Running w/o profile...'
-php $DIR/../build/mishell.phar
+echo 'Running with test profile...****************'
+php $DIR/../build/mishell.phar testProfile.ini sudo

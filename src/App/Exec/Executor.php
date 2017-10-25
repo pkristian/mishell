@@ -12,13 +12,18 @@ class Executor implements IExecutor
 
 	/**
 	 * @param string $command
+	 * @param null|string $user
 	 *
 	 * @return \App\Exec\ExecutorOutput
 	 */
-	public function execute($command)
+	public function execute($command, $user = null)
 	{
 		$r = new ExecutorOutput();
-		$r->command = $command;
+		if ($user)
+		{
+			$r->command = "sudo -u $user ";
+		}
+		$r->command .= $command;
 
 
 		$descriptorspec = [
@@ -27,7 +32,7 @@ class Executor implements IExecutor
 			2 => ["pipe", "w"],  // stderr
 		];
 
-		$process = proc_open($command, $descriptorspec, $pipes, getcwd(), null);
+		$process = proc_open($r->command, $descriptorspec, $pipes, getcwd(), null);
 
 		$stdout = stream_get_contents($pipes[1]);
 		fclose($pipes[1]);

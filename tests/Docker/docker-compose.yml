@@ -1,0 +1,7 @@
+version: '3'
+services:
+  mishell-test:
+    container_name: mishell
+    build: ../../Docker
+    volumes:
+      - "./mishell/:/mishell"

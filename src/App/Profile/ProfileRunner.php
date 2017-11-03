@@ -38,17 +38,18 @@ class ProfileRunner
 	/**
 	 * ProfileRunner constructor.
 	 *
+	 * @param \App\Profile\Profile $profile
 	 * @param \Monolog\Logger $log
 	 * @param \App\Runtime $runtime
 	 * @param \App\Exec\IExecutor $executor
 	 */
-	public function __construct(Logger $log, Runtime $runtime, IExecutor $executor)
+	public function __construct(Profile $profile, Logger $log, Runtime $runtime, IExecutor $executor)
 	{
+		$this->profile = $profile;
 		$this->log = $log;
 		$this->runtime = $runtime;
 		$this->executor = $executor;
 
-		$this->profile = $this->runtime->profile;
 	}
 
 
@@ -59,9 +60,9 @@ class ProfileRunner
 			/** @var \App\Log\StreamHandler $logFileHandler */
 			$logFileHandler = clone $this->log->getHandlers()[0];
 			$logFileHandler->setUrl(
-				$this->runtime->workingDirectory . DIRECTORY_SEPARATOR . $this->runtime->profile->logFile
+				$this->runtime->workingDirectory . DIRECTORY_SEPARATOR . $this->profile->logFile
 			);
-			$logFileHandler->setLevel($this->runtime->profile->logLevel);
+			$logFileHandler->setLevel($this->profile->logLevel);
 			$this->log->pushHandler($logFileHandler);
 		}
 

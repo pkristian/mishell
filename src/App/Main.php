@@ -10,7 +10,7 @@ use Monolog\Logger;
 class Main
 {
 
-	const VERSION = "0.1.0";
+	const VERSION = "0.2.0";
 
 	/**
 	 * @var \Monolog\Logger
@@ -99,14 +99,19 @@ class Main
 	{
 		while (true)
 		{
-			$runner = new Profile\ProfileRunner(
-				$this->log->withName('profile'),
-				$this->runtime,
-				$this->executor
-			);
-			$runner->runProfile();
+			foreach ($this->runtime->profile as $profile)
+			{
+				$runner = new Profile\ProfileRunner(
+					$profile,
+					$this->log->withName('profile'),
+					$this->runtime,
+					$this->executor
+				);
+				$runner->runProfile();
 
-			chdir($this->runtime->workingDirectory);
+				chdir($this->runtime->workingDirectory);
+			}
+
 
 			if (!$this->runtime->daemon) return;
 

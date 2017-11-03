@@ -17,3 +17,4 @@ cd $DIR
 echo ' '
 echo 'Running with test profile...****************'
 php $DIR/../build/mishell.phar testProfile.ini sudo
+php $DIR/../build/mishell.phar ./ sudo

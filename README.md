@@ -28,7 +28,7 @@ Usage
 ---------
 In your favorite console run:
  ```
- php mishell.phar <profileName.ini>
+ php mishell.phar <profileName.ini|profile_directory/>
  ```
 Sample configuration file is [here](https://github.com/pkristian/mishell/blob/v0.1.0/tests/testProfile.ini) ([raw](https://raw.githubusercontent.com/pkristian/mishell/v0.1.0/tests/testProfile.ini)).
 

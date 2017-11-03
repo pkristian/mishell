@@ -8,8 +8,8 @@
 	},
 	"require": {
 		"php": ">=5.6",
-		"nette/utils": "^2.4",
-		"monolog/monolog": "^1.23"
+		"monolog/monolog": "^1.23",
+		"nette/finder": "^2.4"
 	},
 	"authors": [
 		{

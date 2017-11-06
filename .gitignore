@@ -3,5 +3,5 @@ tests/testRepo
 tests/*.log
 build
 mishell.phar
-tests/Docker/mishell/*
-!tests/Docker/mishell/*.ini
+../mishell-docker/Docker/mishell/*
+!../mishell-docker/Docker/mishell/*.ini

@@ -4,4 +4,4 @@ services:
     container_name: mishell-test
     build: .
     volumes:
-      - "../:/usr/src/myapp"
+      - "../:/mishell"

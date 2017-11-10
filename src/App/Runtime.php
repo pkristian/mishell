@@ -76,18 +76,31 @@ class Runtime
 
 	private function loadProfiles($url)
 	{
-		$fullUrl = $this->workingDirectory . $url;
-		$isFile = is_file($fullUrl);
-		$isDirectory = is_dir($fullUrl);
+		$this->profile = [];
+		
+		$urlScript = new \Nette\Http\UrlScript($url,$this->workingDirectory);
+		/* DEBUG */ var_dump([$url => $urlScript->getAbsoluteUrl()]); exit; /* todo DEBUG */
+		
+		if (preg_match('%^\\/%', $url))
+		{
+			$absoluteUrl = $url;
+		}
+		else
+		{
+			$absoluteUrl = $this->workingDirectory . $url;
+		}
+
+		$isFile = is_file($absoluteUrl);
+		$isDirectory = is_dir($absoluteUrl);
 
 		if ($isFile)
 		{
-			$this->loadProfileFile($fullUrl);
+			$this->loadProfileFile($absoluteUrl);
 		}
 		elseif ($isDirectory)
 		{
 			$finder = Finder::findFiles('*.ini')
-				->in($fullUrl)
+				->in($absoluteUrl)
 			;
 			foreach ($finder as $item)
 			{

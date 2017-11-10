@@ -12,7 +12,7 @@ RUN { \
 	  echo 'date.timezone=Europe/Prague'; \
     } >> /usr/local/etc/php/conf.d/custom.ini
 
-VOLUME  /usr/src/myapp/
-WORKDIR /usr/src/myapp/
+VOLUME  /mishell/
+WORKDIR /mishell/
 
 CMD ["bash","tests/innerTest.sh"]

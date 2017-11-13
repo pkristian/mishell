@@ -1,0 +1,7 @@
+version: '2'
+services:
+  mishell-unit:
+    container_name: mishell-unit
+    build: .
+    volumes:
+      - "../../:/app"
